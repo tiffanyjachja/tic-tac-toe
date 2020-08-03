@@ -7,9 +7,41 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge" />
   <title>Tick-Tac-Toe</title>
   <link rel="stylesheet" href="style.css" />
+  <title>LaunchDarkly tutorial</title>
+  <script src="https://unpkg.com/launchdarkly-js-client-sdk@2"></script>
 </head>
 
 <body>
+<script>
+          var user = {
+              "firstName": "Bob",
+              "lastName": "Loblaw",
+              "key": "bob@example.com",
+              "custom": {
+                  "groups": "beta_testers"
+              }
+          };
+
+          var div = document.createElement("div");
+          document.body.appendChild(div);
+
+          div.appendChild(document.createTextNode('Initializing...'));
+
+      // Initialize the LDClient with your Client ID.
+          var ldclient = LDClient.initialize('5f034e779958860b94eb188f', user);
+
+          function render() {
+        // Replace tiff-test-ff with your Featured Flag
+              var shouldShow = ldclient.variation("replace_me", false);
+              var label = (shouldShow ? "Showing" : "Not showing") + " your feature to " + user.key;
+              div.replaceChild(document.createTextNode(label), div.firstChild);
+              var textnode = document.createTextNode("Water");
+          }
+
+      ldclient.on('ready', render);
+      ldclient.on('change', render);
+  </script>
+
 <div class="container">
   <h1>Tic-Tac-Toe</h1>
   <div class="play-area">
@@ -18,6 +50,7 @@
   <h2 id="winner"></h2>
   <button onclick="reset_board()">RESET</button>
 </div>
+
 <script src="./src/index.js"></script>
 </body>
 </html>
