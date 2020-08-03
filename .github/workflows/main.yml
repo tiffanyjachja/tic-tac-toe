@@ -5,9 +5,15 @@ name: CI
 # Controls when the action will run. Triggers the workflow on push or pull request
 # events but only for the master branch
 on:
-on: push
-name: Example Workflow
+  push:
+    branches: [ master, launchdarkly-integration ]
+  pull_request:
+    branches: [ master ]
+
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
+  # Adding LD GitHub Action
   launchDarklyCodeReferences:
     name: LaunchDarkly Code References
     runs-on: ubuntu-latest
@@ -18,14 +24,7 @@ jobs:
       with:
         githubToken: ${{ secrets.GITHUB_TOKEN }}
         accessToken: ${{ secrets.LD_ACCESS_TOKEN }}
-        projKey: YOUR_PROJECT_KEY
-  push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
-
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
-jobs:
+        projKey: production
   # This workflow contains a single job called "build"
   build:
     # The type of runner that the job will run on
