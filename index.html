@@ -1,49 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>TicTacToe</title>
-
-  <link href="public/index.css" rel="stylesheet" />
-  <script src="public/main.js"></script>
-
-  <meta charset="utf-8">
-  <title>LaunchDarkly tutorial</title>
-  <script src="https://unpkg.com/launchdarkly-js-client-sdk@2"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>Tick-Tac-Toe</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
+
 <body>
-<script>
-		var user = {
-			"firstName": "Bob",
-			"lastName": "Loblaw",
-			"key": "bob@example.com",
-			"custom": {
-				"groups": "beta_testers"
-			}
-		};
+<div class="container">
+  <h1>Tic-Tac-Toe</h1>
+  <div class="play-area">
 
-		var div = document.createElement("div");
-		document.body.appendChild(div);
-
-		div.appendChild(document.createTextNode('Initializing...'));
-  
-    // Initialize the LDClient with your Client ID. 
-		var ldclient = LDClient.initialize('5f034e779958860b94eb188f', user);
-
-		function render() {
-          // Replace replace_me with your Featured Flag
-			var shouldShow = ldclient.variation("replace_me", false);
-			var label = (shouldShow ? "Showing" : "Not showing") + " your feature to " + user.key;
-
-			div.replaceChild(document.createTextNode(label), div.firstChild);
-		}
-
-		ldclient.on('ready', render);
-		ldclient.on('change', render);
-	</script>
+  </div>
+  <h2 id="winner"></h2>
+  <button onclick="reset_board()">RESET</button>
+</div>
+<script src="./src/index.js"></script>
 </body>
 </html>
-
-

@@ -1,60 +1,124 @@
-import Game from './game.js'
+const player = "O";
+const computer = "X";
 
-let p1, p2
-while (!p1) {
-  p1 = window.prompt('Enter player 1 name:')
+let board_full = false;
+let play_board = ["", "", "", "", "", "", "", "", ""];
+
+const board_container = document.querySelector(".play-area");
+
+const winner_statement = document.getElementById("winner");
+
+check_board_complete = () => {
+  let flag = true;
+  play_board.forEach(element => {
+    if (element != player && element != computer) {
+      flag = false;
+    }
+  });
+  board_full = flag;
+};
+
+
+const check_line = (a, b, c) => {
+  return (
+    play_board[a] == play_board[b] &&
+    play_board[b] == play_board[c] &&
+    (play_board[a] == player || play_board[a] == computer)
+  );
+};
+
+const check_match = () => {
+  for (i = 0; i < 9; i += 3) {
+    if (check_line(i, i + 1, i + 2)) {
+      document.querySelector(`#block_${i}`).classList.add("win");
+      document.querySelector(`#block_${i + 1}`).classList.add("win");
+      document.querySelector(`#block_${i + 2}`).classList.add("win");
+      return play_board[i];
+    }
+  }
+  for (i = 0; i < 3; i++) {
+    if (check_line(i, i + 3, i + 6)) {
+      document.querySelector(`#block_${i}`).classList.add("win");
+      document.querySelector(`#block_${i + 3}`).classList.add("win");
+      document.querySelector(`#block_${i + 6}`).classList.add("win");
+      return play_board[i];
+    }
+  }
+  if (check_line(0, 4, 8)) {
+    document.querySelector("#block_0").classList.add("win");
+    document.querySelector("#block_4").classList.add("win");
+    document.querySelector("#block_8").classList.add("win");
+    return play_board[0];
+  }
+  if (check_line(2, 4, 6)) {
+    document.querySelector("#block_2").classList.add("win");
+    document.querySelector("#block_4").classList.add("win");
+    document.querySelector("#block_6").classList.add("win");
+    return play_board[2];
+  }
+  return "";
+};
+
+const check_for_winner = () => {
+  let res = check_match()
+  if (res == player) {
+    winner.innerText = "Winner is player!!";
+    winner.classList.add("playerWin");
+    board_full = true
+  } else if (res == computer) {
+    winner.innerText = "Winner is computer";
+    winner.classList.add("computerWin");
+    board_full = true
+  } else if (board_full) {
+    winner.innerText = "Draw!";
+    winner.classList.add("draw");
+  }
+};
+
+
+const render_board = () => {
+  board_container.innerHTML = ""
+  play_board.forEach((e, i) => {
+    board_container.innerHTML += `<div id="block_${i}" class="block" onclick="addPlayerMove(${i})">${play_board[i]}</div>`
+    if (e == player || e == computer) {
+      document.querySelector(`#block_${i}`).classList.add("occupied");
+    }
+  });
+};
+
+const game_loop = () => {
+  render_board();
+  check_board_complete();
+  check_for_winner();
 }
 
-while (!p2 && p1 !== p2) {
-  p2 = window.prompt(p1 === p2
-    ? `Please enter a different name than ${p1}.`
-    : 'Enter player 2 name:')
-}
+const addPlayerMove = e => {
+  if (!board_full && play_board[e] == "") {
+    play_board[e] = player;
+    game_loop();
+    addComputerMove();
+  }
+};
 
-window.onload = () => {
-  document.getElementById('p1Name').innerText = p1
-  document.getElementById('p2Name').innerText = p2
-  let score1 = 0
-  let score2 = 0;
+const addComputerMove = () => {
+  if (!board_full) {
+    do {
+      selected = Math.floor(Math.random() * 9);
+    } while (play_board[selected] != "");
+    play_board[selected] = computer;
+    game_loop();
+  }
+};
 
-  (function playGame (p1, p2) {
-    document.getElementById('win').style.display = 'none'
-    document.getElementById('turn').style.display = 'inline'
-    document.getElementById('p1Score').innerText = score1
-    document.getElementById('p2Score').innerText = score2
+const reset_board = () => {
+  play_board = ["", "", "", "", "", "", "", "", ""];
+  board_full = false;
+  winner.classList.remove("playerWin");
+  winner.classList.remove("computerWin");
+  winner.classList.remove("draw");
+  winner.innerText = "";
+  render_board();
+};
 
-    const game = new Game(p1, p2)
-    const player = document.getElementById('player')
-    player.innerText = game.player
-
-    document.querySelectorAll('#tictactoe td').forEach((el) => {
-      el.innerText = ''
-      el.onclick = (evt) => {
-        el.onclick = undefined
-        evt.target.innerText = game.sym
-        evt.target.onclick = undefined
-
-        const [row, col] = evt.target.classList
-        game.turn(row, col)
-
-        if (game.hasWinner()) {
-          document.getElementById('winner').innerText = game.player
-          document.getElementById('win').style.display = 'inline'
-          document.getElementById('turn').style.display = 'none'
-
-          if (game.player === p1) { document.getElementById('p1Score').innerText = ++score1 } else { document.getElementById('p2Score').innerText = ++score2 }
-
-          document.getElementById('newGame').style.display = 'inline'
-          document.getElementById('newGame').onclick = () => playGame(p1, p2)
-
-          document.querySelectorAll('td').forEach(el => {
-            el.onclick = undefined
-          })
-        } else {
-          game.nextPlayer()
-          player.innerText = game.player
-        }
-      }
-    })
-  })(p1, p2)
-}
+//initial render
+render_board();
