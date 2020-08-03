@@ -33,54 +33,10 @@
 		var ldclient = LDClient.initialize('5f034e779958860b94eb188f', user);
 
 		function render() {
-      // Replace tiff-test-ff with your Featured Flag 
+          // Replace replace_me with your Featured Flag
 			var shouldShow = ldclient.variation("replace_me", false);
 			var label = (shouldShow ? "Showing" : "Not showing") + " your feature to " + user.key;
-			<div id="app">
-			<div>
-			<h2 id="turn">It's <span id="player"></span>'s turn! Simple Change</h2>
-			<h2 id="win">
-			<span id="winner"></span> wins!
-			<button id="newGame">Play again?</button>
-			</h2>
-			</div>
-			<div id="game">
-			<table id="tictactoe">
-			<tr"0">
-			<td class="0 0"></td>
-			<td class="0 1"></td>
-			<td class="0 2"></td>
-			</tr>
-			<tr>
-			<td class="1 0"></td>
-			<td class="1 1"></td>
-			<td class="1 2"></td>
-			</tr>
-			<tr>
-			<td class="2 0"></td>
-			<td class="2 1"></td>
-			<td class="2 2"></td>
-			</tr>
-			</table>
-			<div id="score">
-			<h2>Score</h2>
-			<table>
-			<thead>
-			<tr>
-			<th id="p1Name"></th>
-			<th id="p2Name"></th>
-			</tr>
-			</thead>
-			<tbody>
-			<tr>
-			<td id="p1Score">0</td>
-			<td id="p2Score">0</td>
-			</tr>
-			</tbody>
-			</table>
-			</div>
-			</div>
-			</div>
+
 			div.replaceChild(document.createTextNode(label), div.firstChild);
 		}
 
