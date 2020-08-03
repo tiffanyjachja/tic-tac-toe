@@ -1,6 +1,5 @@
-# Tic Tac Toe Game
+# Tic Tac Toe Game Application
 
-Let's learn about CD while using GitHub Actions and the GitHub Package Registry!
+The repository contains a Tic Tac Toe Game application along with what you need to get started with GitHub Actions and the GitHub Package Registry. 
 
-
-Head over to your first [Pull Request](../../pull/1) to get started
+Follow this [guide here](https://https://harness.io/2020/05/using-github-actions-with-harness/) to learn more about CI/CD using GitHub Actions and Harness.
