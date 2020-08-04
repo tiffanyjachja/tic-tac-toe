@@ -35,7 +35,6 @@
               var shouldShow = ldclient.variation("replace_me", false);
               var label = (shouldShow ? "Showing" : "Not showing") + " your feature to " + user.key;
               div.replaceChild(document.createTextNode(label), div.firstChild);
-              var textnode = document.createTextNode("Water");
           }
 
       ldclient.on('ready', render);
