@@ -6,7 +6,7 @@ name: CI
 # events but only for the master branch
 on:
   push:
-    branches: [ master ]
+    branches: [ master, launchdarkly-integration ]
   pull_request:
     branches: [ master ]
 
@@ -19,13 +19,9 @@ jobs:
     steps:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     - uses: actions/checkout@v2
-
-    # Runs a single command using the runners shell
-    - name: Run a one-line script
-      run: echo Hello, world!
     - name: Publish Docker
       uses: elgohr/Publish-Docker-Github-Action@2.14
       with:
-        name: tiffanyjachja/apps_repo:tictactoe
+        name: tiffanyjachja/apps_repo:nextgen
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
