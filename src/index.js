@@ -1,3 +1,4 @@
+// This is the main file 
 const player = "O";
 const computer = "X";
 
